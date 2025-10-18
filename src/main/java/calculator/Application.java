@@ -1,6 +1,7 @@
 package calculator;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Application {
     public static void main(String[] args) {
@@ -8,13 +9,22 @@ public class Application {
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
 
-        int[] numbers = splitByDelimiter(input);
-        int result = sum(numbers);
+        int[] numbersArray = splitByDelimiter(input);
+        int result = sum(numbersArray);
         System.out.println("결과 : " + result);
     }
 
     private static int[] splitByDelimiter(String input) {
-        String[] numbers = input.split("[,:]");
+        String delimiter = "[,:]";
+        if (input.startsWith("//")) {
+            String[] parts = input.split("\\\\n", 2);
+            String header = parts[0];
+            input = parts[1];
+            String customDelimiter = getDelimiter(header);
+            delimiter = Pattern.quote(customDelimiter);
+        }
+
+        String[] numbers = input.split(delimiter);
         int[] result = new int[numbers.length];
         for (int i = 0; i < numbers.length; i++) {
             result[i] = Integer.parseInt(numbers[i]);
@@ -28,5 +38,9 @@ public class Application {
             sum += number;
         }
         return sum;
+    }
+
+    private static String getDelimiter(String input) {
+        return input.substring(2);
     }
 }
