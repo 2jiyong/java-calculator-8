@@ -9,6 +9,8 @@ public class Application {
         String input = sc.nextLine();
 
         int[] numbers = splitByDelimiter(input);
+        int result = sum(numbers);
+        System.out.println("결과 : " + result);
     }
 
     private static int[] splitByDelimiter(String input) {
@@ -18,5 +20,13 @@ public class Application {
             result[i] = Integer.parseInt(numbers[i]);
         }
         return result;
+    }
+
+    private static int sum(int[] numbers) {
+        int sum = 0;
+        for (int number : numbers) {
+            sum += number;
+        }
+        return sum;
     }
 }
