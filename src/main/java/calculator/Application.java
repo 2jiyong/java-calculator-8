@@ -18,6 +18,11 @@ public class Application {
         String delimiter = "[,:]";
         if (input.startsWith("//")) {
             String[] parts = input.split("\\\\n", 2);
+
+            if (parts.length < 2) {
+                throw new IllegalArgumentException();
+            }
+
             String header = parts[0];
             input = parts[1];
             String customDelimiter = getDelimiter(header);
@@ -27,7 +32,11 @@ public class Application {
         String[] numbers = input.split(delimiter);
         int[] result = new int[numbers.length];
         for (int i = 0; i < numbers.length; i++) {
-            result[i] = Integer.parseInt(numbers[i]);
+            try {
+                result[i] = Integer.parseInt(numbers[i]);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException();
+            }
         }
         return result;
     }
