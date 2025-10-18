@@ -7,5 +7,16 @@ public class Application {
         // TODO: 프로그램 구현
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
+
+        int[] numbers = splitByDelimiter(input);
+    }
+
+    private static int[] splitByDelimiter(String input) {
+        String[] numbers = input.split("[,:]");
+        int[] result = new int[numbers.length];
+        for (int i = 0; i < numbers.length; i++) {
+            result[i] = Integer.parseInt(numbers[i]);
+        }
+        return result;
     }
 }
